@@ -24,9 +24,13 @@ function btnAñdir(){
 </div>`
   contadorNotas = 1; 
 }
-
+let maximoNotas = 5;
 
 function añadirNota() {
+    if (contadorNotas >= maximoNotas) {
+        alert("No puedes añadir más notas");
+        return;
+    }
     var notasAñadidas = document.querySelector(".notas-añadidas");
     var nuevaNota = document.createElement("input");
     var etiquetaNota = document.createElement("label");
