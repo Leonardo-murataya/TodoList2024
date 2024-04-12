@@ -1,19 +1,16 @@
-let menu = document.querySelector('.menu');
 let btn = document.querySelector('.menu-btn');
 
-btn.addEventListener('click', () => {
-  menu.classList.toggle('activo');
-});
+var contadorNotas = 1;
 
 function btnAñdir(){
   document.querySelector('#subMenu').innerHTML = `
   <div class="Sub-añadir">
   <label for="Lista">Titulo de su lista</label>
-  <input type="text" id="Lista">
+  <input type="text" id="Lista" required>
 
   <div class="Notas">
       <label for="Notas">Nota 1</label>
-      <input type="text" id="mianNota">
+      <input type="text" id="mianNota" required>
 
       <button class="añadirNota" onclick="añadirNota()">Añadir</button>
 
@@ -25,9 +22,9 @@ function btnAñdir(){
   <button class="guardar" type="submit" onclick="GuardarNota()">Crear</button>
   <button class="eliminar" onclick="CancelarList()">Cancelar</button>
 </div>`
+  contadorNotas = 1; 
 }
 
-var contadorNotas = 1;
 
 function añadirNota() {
     var notasAñadidas = document.querySelector(".notas-añadidas");
@@ -59,6 +56,13 @@ function GuardarNota(){
     notaAñadida: [] 
   }
 
+  function notasBasias(lista) {
+    if ((titulo.trim() === '') && (nota.trim() === '')) {
+    alert('Por favor ingrese un título y una nota válidos');
+    return;
+    }
+  }
+
   notasA.forEach(notaA => {
     lista.notaAñadida.push(notaA.value); 
   });
@@ -76,7 +80,6 @@ function GuardarNota(){
     <p>${nota}</p>
     ${lista.notaAñadida.map(notaA => `<p>${notaA}</p>`).join('')}
     <button class="btnnneliminar btnnn" onclick="eliminarLista('${titulo}')"><i class='bx bx-message-square-x'></i></button>
-    <button class="btnnneditar btnnn" onclick="editarLista('${titulo}')"><i class='bx bx-message-square-edit'></i>
   `;
   listContainer.appendChild(newList);
 }
@@ -94,49 +97,8 @@ window.onload = function() {
       ${lista.notaAñadida.map(notaA => `<p>${notaA}</p>`).join('')}
       <button class="btnnneliminar btnnn" onclick="eliminarLista('${lista.titulo}')"><i class='bx bx-message-square-x'></i>
       </button>
-      <button class="btnnneditar btnnn" onclick="editarLista('${lista.titulo}')"><i class='bx bx-message-square-edit'></i>
     `;
     listContainer.appendChild(newList);
-  });
-}
-
-btn.addEventListener('click', () => {
-  Eliminar();
-  function Eliminar(){
-    let btnEl = document.getElementById('BBtnEliminar');
-    let botonEliminar = document.querySelectorAll('.btnnneliminar');
-  
-    btnEl.addEventListener('click', () => {
-        botonEliminar.forEach((boton) => {
-            boton.classList.toggle('activo');
-        });
-    });
-  }
-});
-
-document.addEventListener('click', () => {
-  Editar();
-  function Editar(){
-    let btnEd = document.getElementById('BBtnEditar');
-    let botonEditar = document.querySelectorAll('.btnnneditar');
-  
-    btnEd.addEventListener('click', () => {
-        botonEditar.forEach((boton) => {
-            boton.classList.toggle('activo');
-        });
-    });
-  }
-});
-
-//para que el btn de eliminar funcione cuando el menu esta cerrado
-function Eliminar(){
-  let btnEl = document.getElementById('BBtnEliminar');
-  let botonesEliminar = document.querySelectorAll('.btnnneliminar');
-
-  btnEl.addEventListener('click', () => {
-      botonesEliminar.forEach((boton) => {
-          boton.classList.toggle('activo');
-      });
   });
 }
 
@@ -149,30 +111,4 @@ function eliminarLista(titulo) {
     localStorage.setItem('listas', JSON.stringify(listas));
     location.reload();
   }
-}
-
-function editarLista(titulo) {
-  let listas = JSON.parse(localStorage.getItem('listas')) || [];
-  let indice = listas.findIndex(lista => lista.titulo === titulo);
-  let lista = listas[indice];
-
-  document.querySelector('#subMenu').innerHTML = `
-  <div class="Sub-añadir">
-  <label for="Lista">Titulo de su lista</label>
-  <input type="text" id="Lista" value="${lista.titulo}">
-  <div class="Notas">
-      <label for="Notas">Nota 1</label>
-      <input type="text" id="mianNota" value="${lista.nota}">
-      <button class="añadirNota" onclick="añadirNota()">Añadir</button>
-          <div class="notas-añadidas" style="display: block;">
-          ${lista.notaAñadida.map(notaA => `
-            <label for="Notas">${notaA}</label>
-            <input type="text" value="${notaA}">
-          `).join('')}
-          </div>
-  </div>
-  <button class="guardar" type="submit" onclick="GuardarNotaEditada('${titulo}')">Editar</button>
-  <button class="eliminar" onclick="CancelarList()">Cancelar</button>
-</div>`
-
 }
