@@ -1,5 +1,5 @@
 let btn = document.querySelector('.menu-btn');
-
+let maximoNotas = 5;
 var contadorNotas = 1;
 
 function btnAñdir(){
@@ -24,7 +24,6 @@ function btnAñdir(){
 </div>`
   contadorNotas = 1; 
 }
-let maximoNotas = 5;
 
 function añadirNota() {
     if (contadorNotas >= maximoNotas) {
@@ -60,12 +59,13 @@ function GuardarNota(){
     notaAñadida: [] 
   }
 
-  function notasBasias(lista) {
-    if ((titulo.trim() === '') && (nota.trim() === '')) {
+  function notasBasicas(lista) {
+    if ((titulo.trim() === '') && (nota.trim() === '') && (notasAñadidas.length === 0)) {
     alert('Por favor ingrese un título y una nota válidos');
     return;
     }
   }
+  notasBasicas(lista);
 
   notasA.forEach(notaA => {
     lista.notaAñadida.push(notaA.value); 
