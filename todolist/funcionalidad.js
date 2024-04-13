@@ -60,10 +60,18 @@ function GuardarNota(){
   }
 
   function notasBasicas(lista) {
-    if ((titulo.trim() === '') && (nota.trim() === '') && (notasAñadidas.length === 0)) {
-    alert('Por favor ingrese un título y una nota válidos');
-    return;
+    if (titulo.trim() === '') {
+      alert('Por favor ingrese un título válido');
+      return false;
     }
+    if (nota.trim() === '') {
+      alert('Por favor ingrese una nota válida');
+      return false;
+    }
+    return true;
+  }
+  if (!notasBasicas(lista)) {
+    return;
   }
   notasBasicas(lista);
 
@@ -87,6 +95,7 @@ function GuardarNota(){
   `;
   listContainer.appendChild(newList);
 }
+
 
 window.onload = function() {
   let listas = JSON.parse(localStorage.getItem('listas')) || [];
