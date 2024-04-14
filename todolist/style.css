@@ -92,17 +92,7 @@ header {
     border-radius: 5px;
 }
 
-.guardar {
-    background-color: #171717;
-    color: white;
-    border: 1px solid #fff;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin-top: 10px; 
-}
-
-.eliminar {
+.eliminar, .añadirNota, .guardar, .editar {
     background-color: #171717;
     color: white;
     border: 1px solid #fff;
@@ -110,17 +100,6 @@ header {
     padding: 5px 10px;
     cursor: pointer;
     margin-top: 10px;
-}
-
-.añadirNota{
-    background-color: #171717;
-    color: white;
-    border: 1px solid #fff;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin-top: 10px;
-
 }
 
 .titu {
@@ -141,17 +120,16 @@ header {
 }
 
 .lista {
-    border: px solid #000;
     padding: 20px;
-    margin-bottom: 20px;
     background-color: #171717;
     border-radius: 10px;
     width: 320px;
-    height: 110px;
+    height: 140px;
     margin-right: 20px;
     margin-bottom: 15px; 
     overflow: hidden;
     position: relative;
+    transition: .5s;
 }
   
 .lista h3 {
@@ -175,7 +153,7 @@ header {
     padding: 10px 15px;
     cursor: pointer;
     position: absolute;
-    top: 15px;
+    top: 10px;
     right: 15px;
     transition: .5s;
 }
@@ -190,6 +168,75 @@ header {
 }
 
 .lista .btnnneditar {
-    top: 60px;
+    top: 50px;
+    right: 15px;
+}
+
+.lista .btnnnexpandir {
+    top: 90px;
+    right: 15px;
+}
+
+.expandido {
+    background-color: #171717;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 320px;
+    height: 220px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    position: relative;
+    transition: .5s;
+    overflow: hidden;
+}
+
+.expandido h3 {
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.expandido p {
+    margin: 0;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.expandido .btnnn {
+    color: white;
+    background: transparent;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    transition: .5s;
+}
+
+.expandido .btnnn.activo {
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.expandido .btnnn:hover {
+    background: rgba(255, 255, 255, .2)
+}
+
+.expandido .btnnneditar {
+    top: 80px;
+    right: 15px;
+}
+
+.expandido .btnnneliminar {
+    top: 10px;
+    right: 15px;
+}
+
+.expandido .btnnnexpandir {
+    top: 150px;
     right: 15px;
 }
