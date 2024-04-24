@@ -1,0 +1,1 @@
+ver como pasarle los parametros de el form a un archivo php , despues con esos datos hacer un select a la tabla usuarios , si mi dato correo y contrasena se encontro , le doy acceso al panel , si no , mando una alerta de datos erroneos.
