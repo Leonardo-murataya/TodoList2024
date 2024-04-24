@@ -4,42 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Proyecto ToDo List</title>
-    <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <!-- Botones para abrir los modales -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegistro">
+        Registro
+    </button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalInicioSesion">
+        Inicio de sesión
+    </button>
 
-        <header class="Titulos">
-            <h1>Lista de quehaceres</h1>
-            <p>Tu lista a tu estilo</p>
-        </header>
-
-        <div class="Mnu">
-            <button onclick="btnAñdir()">
-                <i class='bx bx-add-to-queue'></i>
-                <span class="Opcion">Agregar lista</span>
-            </button>
-
-        </div>
-
-        <div id="subMenu" class="Sub-menu" style="display: block;">
-
-        </div>
-
-        <div class="listadetareas">
-            <div class="titu">
-                <h2 class="">Lista de tareas</h2>
+    <!-- Modal de Registro -->
+    <div class="modal fade" id="modalRegistro" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalRegistroLabel">Registro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="conexion.php" method="POST">
+                        <div class="mb-3">
+                            <label for="registroEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="registroEmail" name="email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="registroPassword" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="registroPassword" name="password">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Registrarse</button>
+                    </form>
+                </div>
             </div>
-
-            <div class="Tareas"> <!--Aqui se almacenan las listas-->
-
-            </div>   
-        
         </div>
-
     </div>
 
-    <script src="funcionalidad.js"></script>
+    <!-- Modal de Inicio de Sesión -->
+    <div class="modal fade" id="modalInicioSesion" tabindex="-1" aria-labelledby="modalInicioSesionLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalInicioSesionLabel">Inicio de sesión</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="inicioSesionEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="inicioSesionEmail">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inicioSesionPassword" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="inicioSesionPassword">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

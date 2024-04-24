@@ -13,15 +13,15 @@ function btnAñdir(){
       <label for="Notas">Nota 1</label>
       <input type="text" id="mianNota" required>
 
-      <button class="añadirNota" onclick="añadirNota()">Añadir</button>
+      <button type="button" class="btn btn-outline-light" onclick="añadirNota()">Añadir</button>
 
           <div class="notas-añadidas" style="display: none;">
           
           </div>
       
   </div>
-  <button class="guardar" type="submit" onclick="GuardarNota()">Crear</button>
-  <button class="eliminar" onclick="CancelarList()">Cancelar</button>
+  <button type="button" class="btn btn-outline-light" onclick="GuardarNota()">Crear</button>
+  <button type="button" class="btn btn-outline-light" onclick="CancelarList()">Cancelar</button>
 </div>`
   contadorNotas = 1; 
 }
@@ -84,7 +84,7 @@ function GuardarNota(){
   localStorage.setItem('listas', JSON.stringify(listas));
   CancelarList();
 
-  //
+  // Crea un nuevo contenedor de lista y lo agrega al contenedor de listas
   let listContainer = document.querySelector('.Tareas');
   let newList = document.createElement('div');
     newList.classList.add('lista');
@@ -155,7 +155,7 @@ function editarLista(titulo){
 
           <div class="notas-añadidas">
           ${lista.notaAñadida.map((notaA, index) => `
-            <label for="Notas">Nota ${index + 2}</label> // Start from 2
+            <label for="Notas">Nota ${index + 2}</label>
             <input type="text" value="${notaA}">
           `).join('')}
           </div>
@@ -181,21 +181,7 @@ function GuardarEdit() {
   // Validación de los campos de la lista de que no estén vacíos
   // En proceso por mejorar para que no se pueda guardar si no hay notas o si no hay título
   // Y si eliminina una nota, que se actualice el contador de notas elimine el campo y se refleje en el contador de notas
-  function notasBasicas(lista) {
-    if (titulo.trim() === '') {
-      alert('Por favor ingrese un título válido');
-      return false;
-    }
-    if (nota.trim() === '') {
-      alert('Por favor ingrese una nota válida');
-      return false;
-    }
-    return true;
-  }
-  if (!notasBasicas(lista)) {
-    return;
-  }
-  notasBasicas(lista);
+  
 
   notasA.forEach(notaA => {
     lista.notaAñadida.push(notaA.value);
@@ -218,6 +204,22 @@ function GuardarEdit() {
   `;
   listContainer.appendChild(newList);
   eliminarLista(titulo);
+
+  function notasBasicas(lista) {
+    if (titulo.trim() === '') {
+      alert('Por favor ingrese un título válido');
+      return false;
+    }
+    if (nota.trim() === '') {
+      alert('Por favor ingrese una nota válida');
+      return false;
+    }
+    return true;
+  }
+  if (!notasBasicas(lista)) {
+    return;
+  }
+  notasBasicas(lista);
 }
 
 // Función para expandir los contenedores de las listas
