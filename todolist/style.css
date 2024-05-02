@@ -35,6 +35,7 @@ header {
     font-size: 14px;
     color: #666;
 }
+
 .Mnu {
     display: flex;
     justify-content: center;
@@ -92,16 +93,6 @@ header {
     border-radius: 5px;
 }
 
-.titu {
-    background-color: #f2f2f2;
-    padding: 20px;
-    margin-top: 5%;
-    width: 50%;
-    text-align: center;
-    margin-left: 25%;
-    border-radius: 10px;
-}
-
 .eliminar, .añadirNota, .guardar, .editar {
     background-color: #171717;
     color: white;
@@ -110,6 +101,16 @@ header {
     padding: 5px 10px;
     cursor: pointer;
     margin-top: 10px;
+}
+
+.titu {
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin-top: 5%;
+    width: 50%;
+    align-items: center;
+    margin-left: 25%;
+    border-radius: 10px;
 }
 
 .Tareas {
@@ -124,7 +125,7 @@ header {
     background-color: #171717;
     border-radius: 10px;
     width: 320px;
-    height: 155px;
+    height: 140px;
     margin-right: 20px;
     margin-bottom: 15px; 
     overflow: hidden;
@@ -153,7 +154,7 @@ header {
     padding: 10px 15px;
     cursor: pointer;
     position: absolute;
-    top: 5px;
+    top: 10px;
     right: 15px;
     transition: .5s;
 }
@@ -168,12 +169,12 @@ header {
 }
 
 .lista .btnnneditar {
-    top: 55px;
+    top: 50px;
     right: 15px;
 }
 
 .lista .btnnnexpandir {
-    top: 105px;
+    top: 90px;
     right: 15px;
 }
 
@@ -183,7 +184,7 @@ header {
     padding: 20px;
     border-radius: 10px;
     width: 320px;
-    height: 230px;
+    height: 220px;
     margin-right: 20px;
     margin-bottom: 15px;
     position: relative;

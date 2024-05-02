@@ -13,15 +13,15 @@ function btnAñdir(){
       <label for="Notas">Nota 1</label>
       <input type="text" id="mianNota" required>
 
-      <button type="button" class="btn btn-outline-light" onclick="añadirNota()">Añadir</button>
+      <button class="añadirNota" onclick="añadirNota()">Añadir</button>
 
           <div class="notas-añadidas" style="display: none;">
           
           </div>
       
   </div>
-  <button type="button" class="btn btn-outline-light" onclick="GuardarNota()">Crear</button>
-  <button type="button" class="btn btn-outline-light" onclick="CancelarList()">Cancelar</button>
+  <button class="guardar" type="submit" onclick="GuardarNota()">Crear</button>
+  <button class="eliminar" onclick="CancelarList()">Cancelar</button>
 </div>`
   contadorNotas = 1; 
 }
@@ -33,11 +33,16 @@ function añadirNota() {
     return;
   }
   var notasAñadidas = document.querySelector('.notas-añadidas');
-  notasAñadidas.innerHTML += `
-    <label for="Notas">Nota ${++contadorNotas}</label>
+  notasAñadidas.style.display = 'block'; // Hacer visible el contenedor de las notas añadidas
+
+  var nuevaNota = document.createElement('div');
+  nuevaNota.innerHTML = `
+    <label for="Notas">Nota ${contadorNotas + 1}</label>
     <input type="text">
   `;
-  notasAñadidas.style.display = "block";
+  notasAñadidas.appendChild(nuevaNota);
+
+  contadorNotas++;
 }
 
 // Función para cancelar la lista
@@ -51,11 +56,16 @@ function GuardarNota(){
   let nota = document.querySelector('#mianNota').value;
   let notasA = document.querySelectorAll('.notas-añadidas input'); 
 
+  // Obtiene las listas del localStorage o inicializa un array vacío si no existen
+  let listas = JSON.parse(localStorage.getItem('listas')) || [];
+
   let lista = {
+    id: listas.length + 1, // El ID de la lista será la longitud del array de listas más uno
     titulo: titulo,
     nota: nota,
     notaAñadida: [] 
   }
+
 
   // Validación de los campos de la lista de que no estén vacíos
   function notasBasicas(lista) {
@@ -75,11 +85,11 @@ function GuardarNota(){
   notasBasicas(lista);
 
   notasA.forEach(notaA => {
-    lista.notaAñadida.push(notaA.value); 
+    lista.notaAñadida.push(notaA.value);
   });
 
   // Guarda la lista en el localStorage
-  let listas = JSON.parse(localStorage.getItem('listas')) || [];
+  localStorage.setItem('listas', JSON.stringify(listas));
   listas.push(lista);
   localStorage.setItem('listas', JSON.stringify(listas));
   CancelarList();
@@ -92,9 +102,9 @@ function GuardarNota(){
     <h3>${titulo}</h3>
     <p>${nota}</p>
     ${lista.notaAñadida.map(notaA => `<p>${notaA}</p>`).join('')}
-    <button class="btnnneliminar btnnn" onclick="eliminarLista('${titulo}')"><i class='bx bx-message-square-x'></i></button>
-    <button class="btnnneditar btnnn" onclick="editarLista('${lista.titulo}')"><i class='bx bx-message-square-edit'></i></button>
-    <button class="btnnnexpandir btnnn" onclick="expandirContenedores('${lista.titulo}')"><i class='bx bx-expand-alt'></i></button>
+    <button class="btnnneliminar btnnn" onclick="eliminarLista(${lista.id})"><i class='bx bx-message-square-x'></i></button>
+    <button class="btnnneditar btnnn" onclick="editarLista(${lista.id})"><i class='bx bx-message-square-edit'></i></button>
+    <button class="btnnnexpandir btnnn" onclick="expandirContenedores()"><i class='bx bx-expand-alt'></i></button>
   `;
   listContainer.appendChild(newList);
 }
@@ -111,8 +121,8 @@ window.onload = function() {
       <h3>${lista.titulo}</h3>
       <p>${lista.nota}</p>
       ${lista.notaAñadida.map(notaA => `<p>${notaA}</p>`).join('')}
-      <button class="btnnneliminar btnnn" onclick="eliminarLista('${lista.titulo}')"><i class='bx bx-message-square-x'></i></button>
-      <button class="btnnneditar btnnn" onclick="editarLista('${lista.titulo}')"><i class='bx bx-message-square-edit'></i></button>
+      <button class="btnnneliminar btnnn" onclick="eliminarLista(${lista.id})"><i class='bx bx-message-square-x'></i></button>
+      <button class="btnnneditar btnnn" onclick="editarLista(${lista.id})"><i class='bx bx-message-square-edit'></i></button>
       <button id="btnExpandir${index}" class="btnnnexpandir btnnn"><i class='bx bx-expand-alt'></i></button>
     `;
     listContainer.appendChild(newList);
@@ -123,9 +133,9 @@ window.onload = function() {
 }
 
 // Función para eliminar una lista
-function eliminarLista(titulo) {
+function eliminarLista(id) {
   let listas = JSON.parse(localStorage.getItem('listas')) || [];
-  let indice = listas.findIndex(lista => lista.titulo === titulo);
+  let indice = listas.findIndex(lista => lista.id === id);
 
   if (indice !== -1) {
     listas.splice(indice, 1);
@@ -133,10 +143,11 @@ function eliminarLista(titulo) {
     location.reload();
   }
 }
-  // Función para editar una lista
-function editarLista(titulo){
+
+// Función para editar una lista
+function editarLista(id){
   let listas = JSON.parse(localStorage.getItem('listas')) || [];
-  let indice = listas.findIndex(lista => lista.titulo === titulo);
+  let indice = listas.findIndex(lista => lista.id === id);
   let lista = listas[indice];
 
   // Actualiza el contador de notas con la cantidad de notas existentes
@@ -161,27 +172,24 @@ function editarLista(titulo){
           </div>
 
   </div>
-  <button class="guardar" type="submit" onclick="GuardarEdit()">Guardar</button>
+  <button class="guardar" type="submit" onclick="GuardarEdit(${lista.id})">Guardar</button>
   <button class="eliminar" onclick="CancelarList()">Cancelar</button>
 </div>`
 }
 
 // Función para guardar la lista editada y actualizarla en el localStorage
-function GuardarEdit() {
+// Función para guardar la lista editada y actualizarla en el localStorage
+function GuardarEdit(id) {
   let titulo = document.querySelector('#Lista').value;
   let nota = document.querySelector('#mianNota').value;
   let notasA = document.querySelectorAll('.notas-añadidas input');
 
   let lista = {
+    id: id,
     titulo: titulo,
     nota: nota,
     notaAñadida: []
   }
-
-  // Validación de los campos de la lista de que no estén vacíos
-  // En proceso por mejorar para que no se pueda guardar si no hay notas o si no hay título
-  // Y si eliminina una nota, que se actualice el contador de notas elimine el campo y se refleje en el contador de notas
-  
 
   notasA.forEach(notaA => {
     lista.notaAñadida.push(notaA.value);
@@ -189,37 +197,12 @@ function GuardarEdit() {
 
   // Actualiza la lista en el localStorage
   let listas = JSON.parse(localStorage.getItem('listas')) || [];
-  listas.push(lista);
-  localStorage.setItem('listas', JSON.stringify(listas));
-  CancelarList();
-
-  let listContainer = document.querySelector('.Tareas');
-  let newList = document.createElement('div');
-  newList.classList.add('lista');
-  newList.innerHTML = `
-    <h3>${titulo}</h3>
-    <p>${nota}</p>
-    ${lista.notaAñadida.map(notaA => `<p>${notaA}</p>`).join('')}
-    <button class="btnnneliminar btnnn" onclick="eliminarLista('${titulo}')"><i class='bx bx-message-square-x'></i></button>
-  `;
-  listContainer.appendChild(newList);
-  eliminarLista(titulo);
-
-  function notasBasicas(lista) {
-    if (titulo.trim() === '') {
-      alert('Por favor ingrese un título válido');
-      return false;
-    }
-    if (nota.trim() === '') {
-      alert('Por favor ingrese una nota válida');
-      return false;
-    }
-    return true;
+  let indice = listas.findIndex(lista => lista.id === id);
+  if (indice !== -1) {
+    listas[indice] = lista;
+    localStorage.setItem('listas', JSON.stringify(listas));
+    location.reload();
   }
-  if (!notasBasicas(lista)) {
-    return;
-  }
-  notasBasicas(lista);
 }
 
 // Función para expandir los contenedores de las listas
